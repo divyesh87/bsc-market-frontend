@@ -1,0 +1,25 @@
+.inputHeader{
+    background-color: black;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 5rem;
+    padding: 2rem;
+}
+
+.tokensContainer{
+    background-color: black;
+    margin-top: 5rem;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+
+.tokenDisplay{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    gap: 1.5rem;
+}

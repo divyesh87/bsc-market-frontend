@@ -1,0 +1,13 @@
+.cardContainer{
+    display: flex;
+    display: inline-block;
+    padding: 1rem;
+    flex-direction: column;
+}
+
+.nftImage{
+    box-shadow: 0 0 10px 1px #48abe0,
+        0 0 10px 1px #ebecca,
+        0 0 10px 1px blue,
+        0 0 10px 1px white;
+}

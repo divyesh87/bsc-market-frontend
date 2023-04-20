@@ -1,0 +1,35 @@
+.mintPageContainer {
+    background-color: black;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 8rem;
+    padding: 2rem;
+    gap: 2rem;
+}
+
+.mintContainer {
+    display: flex;
+    justify-content: center;
+    gap: 20vw;
+    padding: 2rem;
+    flex-wrap: wrap;
+}
+
+
+.mintControls {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 5rem;
+}
+
+
+
+.mintBtn {
+    box-shadow: 0 0 10px 1px #48abe0,
+        0 0 5px 1px #ebecca,
+        0 0 5px 1px gray,
+        0 0 5px 1px white;
+}

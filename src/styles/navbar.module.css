@@ -1,0 +1,12 @@
+
+.menuContainer{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.navLinks {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
