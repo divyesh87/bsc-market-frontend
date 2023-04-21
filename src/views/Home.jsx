@@ -1,11 +1,47 @@
-import React from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import Navbar from '../common/Header'
 import styles from "../styles/Home.module.css"
 import bnbLogo from "../assets/images/bnbIcon.png"
-import Card from "../common/Card"
+import ListedNFT from "../common/ListedNFT"
 import { Box, Typography } from '@material-ui/core'
+import Web3 from 'web3'
+import config from "../bsc/config.json"
 
+
+let web3;
+let marketContract;
+let tokenContract;
 function Home() {
+  const [nftMetadatas, setnftMetadatas] = useState([])
+
+  useEffect(() => {
+
+    async function loadAndFetchNFTS() {
+      web3 = new Web3(window.ethereum)
+
+      async function intializeContracts() {
+        tokenContract = new web3.eth.Contract(config.tokenContract.abi, config.tokenContract.address)
+        marketContract = new web3.eth.Contract(config.marketContract.abi, config.marketContract.address);
+      }
+
+      async function fetchListedNFTs() {
+        let tempList = []
+        const counter = await marketContract.methods.listingIdCounter().call();
+
+        for (let i = 0; i < counter; i++) {
+          const nft = await marketContract.methods.listings(i).call()
+          tempList.push(nft)
+        }
+
+        setnftMetadatas(tempList)
+      }
+      await intializeContracts()
+      await fetchListedNFTs()
+    }
+    loadAndFetchNFTS()
+
+  }, [])
+
   return (
     <>
       <div className={styles.introContainer}>
@@ -19,7 +55,7 @@ function Home() {
           </Typography>
         </div>
         <div className={styles.logoContainer}>
-          <img style={{width : "33vw"}} src={bnbLogo} />
+          <img style={{ width: "33vw" }} src={bnbLogo} />
           <Typography style={{ color: "white" }} variant='h6'>
             Powered by Binance Smart Chain
           </Typography>
@@ -33,11 +69,10 @@ function Home() {
           </Typography>
         </div>
         <div className={styles.offeringsDisplay}>
-          <Card src={bnbLogo} seller="divyesh86" price="45" />
-          <Card src={bnbLogo} seller="divyesh86" price="45" />
-          <Card src={bnbLogo} seller="divyesh86" price="45" />
-          <Card src={bnbLogo} seller="divyesh86" price="45" />
-          <Card src={bnbLogo} seller="divyesh86" price="45" />
+          {nftMetadatas.map((nft, key) => {
+            console.log(key);
+            return <ListedNFT nft={nft} key={key} />
+          })}
         </div>
       </Box>
     </>
