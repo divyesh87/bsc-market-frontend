@@ -10,6 +10,7 @@ import config from "../bsc/config.json"
 import Web3 from 'web3'
 import { WalletContext } from '../common/Wallet'
 
+
 const JWT = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySW5mb3JtYXRpb24iOnsiaWQiOiI0YmEwODgyNS1lMDU0LTRmZjgtODdkYi03YjUyNTNiODg4ZjciLCJlbWFpbCI6ImRpdnllc2hsYWx3YW5pMEBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwicGluX3BvbGljeSI6eyJyZWdpb25zIjpbeyJpZCI6IkZSQTEiLCJkZXNpcmVkUmVwbGljYXRpb25Db3VudCI6MX0seyJpZCI6Ik5ZQzEiLCJkZXNpcmVkUmVwbGljYXRpb25Db3VudCI6MX1dLCJ2ZXJzaW9uIjoxfSwibWZhX2VuYWJsZWQiOmZhbHNlLCJzdGF0dXMiOiJBQ1RJVkUifSwiYXV0aGVudGljYXRpb25UeXBlIjoic2NvcGVkS2V5Iiwic2NvcGVkS2V5S2V5IjoiODA5MzI5MjQ3MmFjYTE2NzAzOTAiLCJzY29wZWRLZXlTZWNyZXQiOiI0NGFhOWZkOTQ4YTQ5NmM5NTk0MzIwZWU1NjJlMzRkNjFlYzQ0OTMxM2M2YmIxNTc4NGI2ZDY3NjkyY2U3YWE0IiwiaWF0IjoxNjgxOTkxMjg1fQ.KmG3N0NreJXzm51Gbp13qMXeAya9GpAHqREwCTeCtFA"
 
 let web3;
@@ -111,9 +112,9 @@ function Mint() {
   async function mint(hash) {
     try {
       const res = await tokenContract.methods.safeMint(activeAcc, hash).send({
-        from : activeAcc
+        from: activeAcc
       })
-      if(res.blockHash != null){
+      if (res.blockHash != null) {
         toast.success("NFT Minted Successfully", {
           position: "top-left",
           autoClose: 5000,
@@ -125,7 +126,18 @@ function Mint() {
           theme: "dark",
         });
       }
+
     } catch (e) {
+      toast.error("Failed to mint NFT", {
+        position: "top-left",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
       console.log(e);
     }
   }

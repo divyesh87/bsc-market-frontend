@@ -8,6 +8,7 @@ import { EvmChain } from '@moralisweb3/common-evm-utils'
 import { WalletContext } from '../common/Wallet'
 import Moralis from "moralis";
 
+
 const CHAIN = EvmChain.BSC_TESTNET;
 function MyTokens() {
 
@@ -55,9 +56,8 @@ function MyTokens() {
             <hr />
           </Typography>
           <div className={styles.tokenDisplay}>
-            {nftMetadatas.map(nft => {
-              console.log(nft);
-              return <NFTCard nft={nft} />
+            {nftMetadatas.map((nft , key)=> {
+              return <NFTCard nft={nft} key={key}/>
             })}
           </div>
         </div>
