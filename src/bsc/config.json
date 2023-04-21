@@ -410,8 +410,44 @@
         ]
     },
     "marketContract": {
-        "address": "0x98B47fd0146D9869C1f61B69C555FD7ADC018032",
+        "address": "0x581efe76f0764CC94DE01E061cdF89441cf37C7E",
         "abi": [
+            {
+                "inputs": [
+                    {
+                        "internalType": "uint256",
+                        "name": "listingId",
+                        "type": "uint256"
+                    }
+                ],
+                "name": "buyToken",
+                "outputs": [],
+                "stateMutability": "payable",
+                "type": "function"
+            },
+            {
+                "inputs": [
+                    {
+                        "internalType": "address",
+                        "name": "tokenContractAddress",
+                        "type": "address"
+                    },
+                    {
+                        "internalType": "uint256",
+                        "name": "tokenId",
+                        "type": "uint256"
+                    },
+                    {
+                        "internalType": "uint256",
+                        "name": "price",
+                        "type": "uint256"
+                    }
+                ],
+                "name": "listToken",
+                "outputs": [],
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
             {
                 "anonymous": false,
                 "inputs": [
@@ -493,42 +529,6 @@
                 "type": "event"
             },
             {
-                "inputs": [
-                    {
-                        "internalType": "uint256",
-                        "name": "listingId",
-                        "type": "uint256"
-                    }
-                ],
-                "name": "buyToken",
-                "outputs": [],
-                "stateMutability": "payable",
-                "type": "function"
-            },
-            {
-                "inputs": [
-                    {
-                        "internalType": "address",
-                        "name": "tokenContractAddress",
-                        "type": "address"
-                    },
-                    {
-                        "internalType": "uint256",
-                        "name": "tokenId",
-                        "type": "uint256"
-                    },
-                    {
-                        "internalType": "uint256",
-                        "name": "price",
-                        "type": "uint256"
-                    }
-                ],
-                "name": "listToken",
-                "outputs": [],
-                "stateMutability": "nonpayable",
-                "type": "function"
-            },
-            {
                 "inputs": [],
                 "name": "listingIdCounter",
                 "outputs": [
@@ -551,6 +551,11 @@
                 ],
                 "name": "listings",
                 "outputs": [
+                    {
+                        "internalType": "uint256",
+                        "name": "listingId",
+                        "type": "uint256"
+                    },
                     {
                         "internalType": "uint256",
                         "name": "tokenId",

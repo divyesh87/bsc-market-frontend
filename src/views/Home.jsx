@@ -30,6 +30,7 @@ function Home() {
 
         for (let i = 0; i < counter; i++) {
           const nft = await marketContract.methods.listings(i).call()
+          if(!nft.isActive) continue;
           tempList.push(nft)
         }
 
