@@ -1,0 +1,8 @@
+.cardContainer{
+    display: flex;
+    padding: 1rem;
+    flex-direction: column;
+    background-color: transparent;
+    border: 2px solid white;
+    cursor: pointer;
+}

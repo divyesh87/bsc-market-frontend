@@ -113,7 +113,18 @@ function Mint() {
       const res = await tokenContract.methods.safeMint(activeAcc, hash).send({
         from : activeAcc
       })
-      console.log(res);
+      if(res.blockHash != null){
+        toast.success("NFT Minted Successfully", {
+          position: "top-left",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
+      }
     } catch (e) {
       console.log(e);
     }

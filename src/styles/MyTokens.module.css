@@ -20,6 +20,6 @@
 .tokenDisplay{
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-evenly;
-    gap: 1.5rem;
+    justify-content: flex-start;
+    gap: 3rem;
 }

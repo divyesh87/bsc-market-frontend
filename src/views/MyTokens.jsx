@@ -1,37 +1,64 @@
-import React from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Navbar from '../common/Header'
 import styles from "../styles/MyTokens.module.css"
 import { Box, Button, TextField, Typography } from '@material-ui/core'
-import DisplayNFT from "../common/DisplayNFT"
 import stxLogo from "../assets/images/stacksLogo.png"
+import NFTCard from "../common/NFTCard"
+import { EvmChain } from '@moralisweb3/common-evm-utils'
+import { WalletContext } from '../common/Wallet'
+import Moralis from "moralis";
 
+const CHAIN = EvmChain.BSC_TESTNET;
 function MyTokens() {
+
+  const [nftMetadatas, setnftMetadatas] = useState([])
+  const { connect, activeAcc } = useContext(WalletContext)
+
+  useEffect(() => {
+    async function startMoralis() {
+      try {
+        await Moralis.start({
+          apiKey: "N1qS26kXpedENLybZLGl4ZcZXFlXCzk587tx9zHyuZTHSS29JbbOyzF6wSkNUitL"
+        })
+      } catch (e) {
+        console.error("moralis sdk error");
+      }
+    }
+
+    startMoralis()
+
+  }, [])
+
+  useEffect(() => {
+    async function loadFromTokenContract() {
+      try {
+        const {jsonResponse} = await Moralis.EvmApi.nft.getWalletNFTs({
+          address: activeAcc,
+          chain: CHAIN
+        })
+        setnftMetadatas(jsonResponse.result)
+      }
+      catch (e) {
+        console.error("Failed to fetch nfts");
+      }
+    }
+    loadFromTokenContract()
+  }, [activeAcc])
+
+
   return (
     <>
       <Box className={styles.pageContainer}>
-        <div className={styles.inputHeader}>
-          <Typography variant='h3' style={{ color: "white" }}>
-            Explore all your Tokens
-          </Typography>
-          <Typography variant='subtitle1' style={{ color: "white" }}>
-            You can manually search for tokens held by you by querying your token contract address.
-            <hr />
-          </Typography>
-          <TextField style={{ borderRadius: "0.2rem", color: "white", backgroundColor: "white", }} label="Search for token contracts" />
-          <Button className={styles.mintBtn} variant='outlined' style={{ color: "white", background: "black", width: "25%", border: "1px solid white", marginTop: "0.5rem" }} >
-            Search
-          </Button>
-        </div>
         <div className={styles.tokensContainer}>
           <Typography align="center" variant='h4' style={{ color: "white" }}>
-            Found x Tokens
+            Found {nftMetadatas.length} Tokens
             <hr />
           </Typography>
           <div className={styles.tokenDisplay}>
-            <DisplayNFT src={stxLogo}/>
-            <DisplayNFT src={stxLogo}/>
-            <DisplayNFT src={stxLogo}/>
-            <DisplayNFT src={stxLogo}/>
+            {nftMetadatas.map(nft => {
+              console.log(nft);
+              return <NFTCard nft={nft} />
+            })}
           </div>
         </div>
       </Box>
