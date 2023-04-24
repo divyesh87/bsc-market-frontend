@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from 'react'
-import Navbar from '../common/Header'
 import { Box, Button, Typography } from '@material-ui/core'
 import styles from "../styles/Mint.module.css"
 import DisplayNFT from "../common/DisplayNFT"
@@ -15,44 +14,56 @@ const JWT = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySW5mb3JtYXRpb24
 
 let web3;
 let tokenContract;
+let playableTokenContract;
+const OFFCHAIN_METADATA_URL = "https://bnb-mkt-backend-u.onrender.com/upload"
 
 function Mint() {
 
-  const [img, setimg] = useState(null)
+  const [file, setfile] = useState(null)
   const [selectedFile, setselectedFile] = useState(null)
   const { connect, activeAcc } = useContext(WalletContext)
+  const [metadataType, setmetadataType] = useState(null);
 
   useEffect(() => {
 
     web3 = new Web3(window.ethereum)
     async function loadContract() {
       tokenContract = new web3.eth.Contract(config.tokenContract.abi, config.tokenContract.address);
+      playableTokenContract = new web3.eth.Contract(config.playableNFTContract.abi, config.playableNFTContract.address);
     }
     loadContract()
 
   }, [])
 
 
-  function handleImg(e) {
+  function handleFile(e) {
     try {
       const file = e.target.files[0];
-      if (!file.type.startsWith("image/")) return alert("Invalid type!");
-      setselectedFile(file)
-      const reader = new FileReader();
+      if (file.type.startsWith("image/")) {
+        setselectedFile(file)
+        setmetadataType("img");
+        const reader = new FileReader();
 
-      reader.addEventListener("load", () => {
-        setimg(reader.result)
-      })
+        reader.addEventListener("load", () => {
+          setfile(reader.result)
+        })
 
-      reader.readAsDataURL(file)
+        reader.readAsDataURL(file)
+      }
+      else if (file.type.startsWith("video/")) {
+        setmetadataType("video")
+        setselectedFile(file)
+        setfile(file)
+      }
+      else return alert("Invalid type");
+
     } catch (e) {
       alert("somthing went wrong")
     }
 
   }
 
-  async function mintNFT(e) {
-    e.preventDefault();
+  async function mintTOIPFS() {
     const formData = new FormData();
     formData.append("file", selectedFile);
     const metadata = JSON.stringify({
@@ -110,8 +121,11 @@ function Mint() {
   }
 
   async function mint(hash) {
+    console.log(hash);
     try {
-      const res = await tokenContract.methods.safeMint(activeAcc, hash).send({
+      const contract = metadataType == "img" ? tokenContract : playableTokenContract
+
+      const res = await contract.methods.safeMint(activeAcc, hash.toString()).send({
         from: activeAcc
       })
       if (res.blockHash != null) {
@@ -141,6 +155,32 @@ function Mint() {
       console.log(e);
     }
   }
+  async function mintNFT(e) {
+    e.preventDefault();
+    if (metadataType == "img") {
+      mintTOIPFS()
+    }
+    else if (metadataType == "video") {
+      mintOffChain()
+    }
+    else {
+      return alert("invalid type")
+    }
+  }
+
+  async function mintOffChain() {
+    const formData = new FormData();
+    formData.append("file", selectedFile);
+
+    try {
+      const { data } = await axios.post(OFFCHAIN_METADATA_URL, formData);
+      if (!data.success) throw Error("failed")
+      console.log(data.id);
+      mint(data.id);
+    } catch (e) {
+      console.error(e);
+    }
+  }
 
   return (
     <>
@@ -156,10 +196,10 @@ function Mint() {
         </div>
         <div className={styles.mintContainer}>
           <div>
-            <DisplayNFT owner="test" file={img ? img : null} />
+            <DisplayNFT owner="test" type={metadataType} file={file ? file : null} />
           </div>
           <div className={styles.mintControls}>
-            <input onChange={(e) => handleImg(e)} style={{ color: "white", backgroundColor: "black", border: "2px solid white", }} type="file" />
+            <input onChange={(e) => handleFile(e)} style={{ color: "white", backgroundColor: "black", border: "2px solid white", }} type="file" />
             <Button onClick={mintNFT} className={styles.mintBtn} variant='outlined' style={{ color: "white", background: "black", border: "1px solid white" }} >
               Mint
             </Button>

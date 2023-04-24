@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from 'react'
 import Navbar from '../common/Header'
 import styles from "../styles/MyTokens.module.css"
 import { Box, Button, TextField, Typography } from '@material-ui/core'
-import stxLogo from "../assets/images/stacksLogo.png"
 import NFTCard from "../common/NFTCard"
 import { EvmChain } from '@moralisweb3/common-evm-utils'
 import { WalletContext } from '../common/Wallet'
@@ -37,6 +36,7 @@ function MyTokens() {
           address: activeAcc,
           chain: CHAIN
         })
+        console.log(jsonResponse);
         setnftMetadatas(jsonResponse.result)
       }
       catch (e) {

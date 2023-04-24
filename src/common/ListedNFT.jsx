@@ -15,7 +15,7 @@ function ListedNFT({ nft }) {
         seller: nft.seller,
         src: null
     })
-    const {activeAcc} = useContext(WalletContext)
+    const { activeAcc } = useContext(WalletContext)
 
     useEffect(() => {
         setnftMetadata({ ...nftMetadata, seller: nft.seller, price: nft.price / 1e18 })
@@ -40,8 +40,8 @@ function ListedNFT({ nft }) {
 
     async function buyNFT() {
         await marketContract.methods.buyToken(nft.listingId).send({
-            from : activeAcc,
-            value : nft.price
+            from: activeAcc,
+            value: nft.price
         })
     }
 
