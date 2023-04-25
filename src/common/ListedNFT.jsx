@@ -11,11 +11,15 @@ let web3;
 function ListedNFT({ nft }) {
     const tokenContract = useRef(null)
     const [metadataType, setmetadataType] = useState(null)
+    const videoRef = useRef(null)
+    const [TxSuccess, setTxSuccess] = useState(false)
     const [nftMetadata, setnftMetadata] = useState({
         price: nft.price / 1e18,
         seller: nft.seller,
         src: null
     })
+
+    console.log(nft);
     const { activeAcc } = useContext(WalletContext)
 
     useEffect(() => {
@@ -57,14 +61,28 @@ function ListedNFT({ nft }) {
         })
     }
 
+    async function playNFT() {
+        try {
+            const { blockHash } = await web3.eth.sendTransaction({
+                from: activeAcc,
+                to: nft.seller,
+                value: 1e16.toString()
+            })
+            if (blockHash) setTxSuccess(true);
+        } catch (e) {
+            setTxSuccess(false);
+        }
+    }
+
     return (
         <Box className={styles.cardContainer}>
             <div className={styles.nftImage}>
                 {metadataType == "video"
                     ?
-                    <video style={{ height: "30vh", width: "25vw" }} controls loop>
+                    <video ref={videoRef} style={{ height: "30vh", width: "25vw" }} controls={TxSuccess} loop>
                         <source src={nftMetadata.src} />
-                    </video> :
+                    </video>
+                    :
                     <img style={{ height: "30vh" }} src={nftMetadata.src} />
 
 
@@ -81,7 +99,15 @@ function ListedNFT({ nft }) {
                     SELLER : {nftMetadata.seller.slice(0, 4)}...{nftMetadata.seller.slice(nftMetadata.seller.length - 3, nftMetadata.seller.length)}
                 </Typography>
             </div>
-            <Button onClick={buyNFT} variant='outlined' style={{ color: "white", border: "0.1rem solid white", width: "100%", marginTop: "0.4rem" }}>
+            <div>
+                {metadataType == "video" &&
+                    <Button onClick={playNFT} variant='outlined' style={{ color: "white", border: "0.1rem solid white", width: "100%", marginTop: "0.4rem" }}>
+                        Play
+                    </Button>
+                }
+            </div>
+
+            <Button onClick={buyNFT} variant='outlined' style={{ color: "white", border: "0.1rem solid white", width: "100%", marginTop: "0.4rem", alignSelf: "flex-end" }}>
                 Buy
             </Button>
         </Box>
