@@ -1,15 +1,16 @@
 import { Box, Button, Typography } from '@material-ui/core'
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState, useRef } from 'react'
 import bnbIcon from "../assets/images/bnbIcon.png"
 import styles from "../styles/Card.module.css"
 import config from "../bsc/config.json"
 import Web3 from 'web3'
 import { WalletContext } from './Wallet'
 
-let tokenContract;
 let marketContract;
 let web3;
 function ListedNFT({ nft }) {
+    const tokenContract = useRef(null)
+    const [metadataType, setmetadataType] = useState(null)
     const [nftMetadata, setnftMetadata] = useState({
         price: nft.price / 1e18,
         seller: nft.seller,
@@ -23,13 +24,24 @@ function ListedNFT({ nft }) {
         async function loadAndFetch() {
 
             async function intializeContracts() {
-                tokenContract = new web3.eth.Contract(config.tokenContract.abi, nft.tokenContract);
+                tokenContract.current = new web3.eth.Contract(config.tokenContract.abi, nft.tokenContract);
                 marketContract = new web3.eth.Contract(config.marketContract.abi, config.marketContract.address);
             }
 
             async function fetchNFTImg() {
-                const src = await tokenContract.methods.tokenURI(nft.tokenId).call()
-                setnftMetadata({ ...nftMetadata, src: src })
+                try {
+                    const src = await tokenContract.current.methods.tokenURI(nft.tokenId).call()
+                    if (src.startsWith("https://bnb-mkt-backend-u.onrender.com/metadata")) {
+                        setmetadataType("video")
+                        console.log(src);
+                    }
+                    else {
+                        setmetadataType("img")
+                    }
+                    setnftMetadata({ ...nftMetadata, src: src })
+                } catch (e) {
+                    console.log(e);
+                }
             }
             await intializeContracts()
             await fetchNFTImg()
@@ -45,15 +57,18 @@ function ListedNFT({ nft }) {
         })
     }
 
-
-
-
-    console.log(nft);
-
     return (
         <Box className={styles.cardContainer}>
             <div className={styles.nftImage}>
-                <img style={{ height: "30vh" }} src={nftMetadata.src} />
+                {metadataType == "video"
+                    ?
+                    <video style={{ height: "30vh", width: "25vw" }} controls loop>
+                        <source src={nftMetadata.src} />
+                    </video> :
+                    <img style={{ height: "30vh" }} src={nftMetadata.src} />
+
+
+                }
             </div>
             <div>
                 <Typography style={{ color: "white", display: "flex", alignItems: "center" }} variant='subtitle1'>

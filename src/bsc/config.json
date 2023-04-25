@@ -410,7 +410,7 @@
         ]
     },
     "marketContract": {
-        "address": "0x581efe76f0764CC94DE01E061cdF89441cf37C7E",
+        "address": "0x54420f64edF7a2512208D9a2e2943C0ff8c0C251",
         "abi": [
             {
                 "inputs": [

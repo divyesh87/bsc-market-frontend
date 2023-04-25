@@ -28,10 +28,16 @@ function Home() {
         let tempList = []
         const counter = await marketContract.methods.listingIdCounter().call();
 
-        for (let i = 0; i < counter; i++) {
-          const nft = await marketContract.methods.listings(i).call()
-          if(!nft.isActive) continue;
-          tempList.push(nft)
+        for (let i = 0; i < counter ; i++) {
+          try {
+            const nft = await marketContract.methods.listings(i).call()
+            console.log(nft);
+            if (!nft.isActive) continue;
+            tempList.push(nft)
+          } catch (e) {
+            console.log(e);
+          }
+
         }
 
         setnftMetadatas(tempList)
@@ -71,7 +77,6 @@ function Home() {
         </div>
         <div className={styles.offeringsDisplay}>
           {nftMetadatas.map((nft, key) => {
-            console.log(key);
             return <ListedNFT nft={nft} key={key} />
           })}
         </div>

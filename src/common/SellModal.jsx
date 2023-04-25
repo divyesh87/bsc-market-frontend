@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import { Typography, Box, Button } from '@material-ui/core'
 import { Form, InputGroup, Modal } from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -6,11 +6,11 @@ import Web3 from "web3"
 import config from "../bsc/config.json"
 import { WalletContext } from './Wallet';
 
-let tokenContract;
 let marketContract;
 let web3;
 
 function SellModal({ nft, showModal, handleModal }) {
+    const tokenContract = useRef(null)
     const [price, setprice] = useState(0)
     const { activeAcc, connect } = useContext(WalletContext)
 
@@ -18,7 +18,8 @@ function SellModal({ nft, showModal, handleModal }) {
 
         web3 = new Web3(window.ethereum)
         async function intializeContracts() {
-            tokenContract = new web3.eth.Contract(config.tokenContract.abi, nft.token_address);
+            console.log(nft.token_address);
+            tokenContract.current = new web3.eth.Contract(config.tokenContract.abi, nft.token_address);
             marketContract = new web3.eth.Contract(config.marketContract.abi, config.marketContract.address);
         }
         intializeContracts()
@@ -47,7 +48,7 @@ function SellModal({ nft, showModal, handleModal }) {
 
     async function approveMarketContract() {
         try {
-            const res = await tokenContract.methods.approve(config.marketContract.address, parseInt(nft.token_id)).send({
+            const res = await tokenContract.current.methods.approve(config.marketContract.address, parseInt(nft.token_id)).send({
                 from: activeAcc
             })
             console.log(res);
