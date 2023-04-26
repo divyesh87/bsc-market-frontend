@@ -18,7 +18,6 @@ function SellModal({ nft, showModal, handleModal }) {
 
         web3 = new Web3(window.ethereum)
         async function intializeContracts() {
-            console.log(nft.token_address);
             tokenContract.current = new web3.eth.Contract(config.tokenContract.abi, nft.token_address);
             marketContract = new web3.eth.Contract(config.marketContract.abi, config.marketContract.address);
         }

@@ -36,7 +36,6 @@ function MyTokens() {
           address: activeAcc,
           chain: CHAIN
         })
-        console.log(jsonResponse);
         setnftMetadatas(jsonResponse.result)
       }
       catch (e) {

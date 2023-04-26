@@ -15,7 +15,7 @@ function DisplayNFT({ file, type }) {
                         ?
                         <img style={{ height: "30vh" }} src={file} />
                         :
-                        <video loop autoPlay>
+                        <video style={{height : "30vh"}} loop autoPlay>
                             <source src={URL.createObjectURL(file)} type={file.type} />
                         </video>
                 }

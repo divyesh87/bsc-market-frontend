@@ -15,8 +15,8 @@ function DisplayNFT({ nft }) {
         else {
             setmetadataType("img")
         }
+        console.log(nft.token_uri);
     }, [])
-
     function handleModal() {
         setModal(!Modal)
     }
