@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
-import { Typography, Box, Button } from '@material-ui/core'
-import { Form, InputGroup, Modal } from 'react-bootstrap'
+import { Typography, Button } from '@material-ui/core'
+import { Form, Modal } from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Web3 from "web3"
 import config from "../bsc/config.json"
@@ -12,7 +12,7 @@ let web3;
 function SellModal({ nft, showModal, handleModal }) {
     const tokenContract = useRef(null)
     const [price, setprice] = useState(0)
-    const { activeAcc, connect } = useContext(WalletContext)
+    const { activeAcc } = useContext(WalletContext)
 
     useEffect(() => {
 
@@ -38,7 +38,7 @@ function SellModal({ nft, showModal, handleModal }) {
     async function listonMarket() {
         try {
             await marketContract.methods.listToken(nft.token_address, parseInt(nft.token_id), (price * 1e18).toString()).send({
-                from : activeAcc
+                from: activeAcc
             })
         } catch (e) {
             console.log(e);

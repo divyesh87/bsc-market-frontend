@@ -1,8 +1,7 @@
-import React, { useState, useEffect, useContext } from 'react'
-import Navbar from '../common/Header'
+import React, { useState, useEffect } from 'react'
 import styles from "../styles/Home.module.css"
 import bnbLogo from "../assets/images/bnbIcon.png"
-import ListedNFT from "../common/ListedNFT"
+import ListedNFT from "../components/ListedNFT"
 import { Box, Typography } from '@material-ui/core'
 import Web3 from 'web3'
 import config from "../bsc/config.json"
@@ -10,7 +9,6 @@ import config from "../bsc/config.json"
 
 let web3;
 let marketContract;
-let tokenContract;
 function Home() {
   const [nftMetadatas, setnftMetadatas] = useState([])
 
@@ -20,7 +18,7 @@ function Home() {
       web3 = new Web3(window.ethereum)
 
       async function intializeContracts() {
-        tokenContract = new web3.eth.Contract(config.tokenContract.abi, config.tokenContract.address)
+
         marketContract = new web3.eth.Contract(config.marketContract.abi, config.marketContract.address);
       }
 
@@ -28,10 +26,9 @@ function Home() {
         let tempList = []
         const counter = await marketContract.methods.listingIdCounter().call();
 
-        for (let i = 0; i < counter ; i++) {
+        for (let i = 0; i < counter; i++) {
           try {
             const nft = await marketContract.methods.listings(i).call()
-            console.log(nft);
             if (!nft.isActive) continue;
             tempList.push(nft)
           } catch (e) {
@@ -62,7 +59,7 @@ function Home() {
           </Typography>
         </div>
         <div className={styles.logoContainer}>
-          <img style={{ width: "33vw" }} src={bnbLogo} />
+          <img style={{ width: "33vw" }} src={bnbLogo} alt="BNBLOGO" />
           <Typography style={{ color: "white" }} variant='h6'>
             Powered by Binance Smart Chain
           </Typography>

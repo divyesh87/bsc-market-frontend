@@ -23,10 +23,10 @@ function UploadWidget({ nftDetails, setNftDetails }) {
 
     function handleEvent(res) {
         console.log(res);
-        if (res.event == "queues-end" && res.data.info.files[0].failed) {
+        if (res.event === "queues-end" && res.data.info.files[0].failed) {
             console.log("failed");
         }
-        else if (res.event && res.event == "success" && res.info.public_id) {
+        else if (res.event && res.event === "success" && res.info.public_id) {
             widgetRef.current.close()
             setNftDetails({ ...nftDetails, url: res.info.secure_url, uploaded: true })
         }

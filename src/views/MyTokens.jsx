@@ -1,10 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react'
-import Navbar from '../common/Header'
 import styles from "../styles/MyTokens.module.css"
-import { Box, Button, TextField, Typography } from '@material-ui/core'
-import NFTCard from "../common/NFTCard"
+import { Box, Typography } from '@material-ui/core'
+import NFTCard from "../components/NFTCard"
 import { EvmChain } from '@moralisweb3/common-evm-utils'
-import { WalletContext } from '../common/Wallet'
+import { WalletContext } from '../components/Wallet'
 import Moralis from "moralis";
 
 
@@ -12,16 +11,16 @@ const CHAIN = EvmChain.BSC_TESTNET;
 function MyTokens() {
 
   const [nftMetadatas, setnftMetadatas] = useState([])
-  const { connect, activeAcc } = useContext(WalletContext)
+  const { activeAcc } = useContext(WalletContext)
 
   useEffect(() => {
     async function startMoralis() {
       try {
         await Moralis.start({
-          apiKey: "N1qS26kXpedENLybZLGl4ZcZXFlXCzk587tx9zHyuZTHSS29JbbOyzF6wSkNUitL"
+          apiKey: process.env.REACT_APP_MORALIS_API_KEY
         })
       } catch (e) {
-        console.error("moralis sdk error");
+        console.error("Moralis SDK error");
       }
     }
 

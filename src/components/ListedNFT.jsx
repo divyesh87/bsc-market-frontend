@@ -19,7 +19,6 @@ function ListedNFT({ nft }) {
         src: null
     })
 
-    console.log(nft);
     const { activeAcc } = useContext(WalletContext)
 
     useEffect(() => {
@@ -37,7 +36,6 @@ function ListedNFT({ nft }) {
                     const src = await tokenContract.current.methods.tokenURI(nft.tokenId).call()
                     if (src.startsWith("https://res.cloudinary.com")) {
                         setmetadataType("video")
-                        console.log(src);
                     }
                     else {
                         setmetadataType("img")
