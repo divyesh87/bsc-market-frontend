@@ -8,7 +8,7 @@
     gap: 2rem;
 }
 
-.mintContainer {
+.ImgMintContainer {
     display: flex;
     justify-content: center;
     gap: 20vw;
@@ -16,6 +16,15 @@
     flex-wrap: wrap;
 }
 
+.vidMintContainer {
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 2.5rem;
+    gap: 3rem;
+    flex-wrap: wrap;
+}
 
 .mintControls {
     display: flex;

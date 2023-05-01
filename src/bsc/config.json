@@ -410,7 +410,7 @@
         ]
     },
     "marketContract": {
-        "address": "0x54420f64edF7a2512208D9a2e2943C0ff8c0C251",
+        "address": "0xe24e9E1f9F6f8Ec832ab753f7D5875ECACA1686f",
         "abi": [
             {
                 "inputs": [
@@ -588,7 +588,7 @@
         ]
     },
     "playableNFTContract": {
-        "address": "0xCF3C9598b2e81401E30EAd7CFe0CD91040D354b3",
+        "address": "0x33ab289847F138A2E013aE296FD7FBa4522796fc",
         "abi": [
             {
                 "inputs": [],

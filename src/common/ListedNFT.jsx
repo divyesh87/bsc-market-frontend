@@ -35,7 +35,7 @@ function ListedNFT({ nft }) {
             async function fetchNFTImg() {
                 try {
                     const src = await tokenContract.current.methods.tokenURI(nft.tokenId).call()
-                    if (src.startsWith("https://bnb-mkt-backend-u.onrender.com/metadata")) {
+                    if (src.startsWith("https://res.cloudinary.com")) {
                         setmetadataType("video")
                         console.log(src);
                     }

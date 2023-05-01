@@ -9,7 +9,7 @@ function DisplayNFT({ nft }) {
     const [metadataType, setmetadataType] = useState(null)
 
     useEffect(() => {
-        if (nft.token_uri.startsWith("https://bnb-mkt-backend-u.onrender.com/metadata")) {
+        if (nft.token_uri.startsWith("https://res.cloudinary.com")) {
             setmetadataType("video")
         }
         else {
