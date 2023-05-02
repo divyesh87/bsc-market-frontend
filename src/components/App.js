@@ -31,22 +31,27 @@ function App() {
       }, 2000)
       setTimeout(() => {
         switchToBSC()
-        connect()
       }, 3000)
     }
 
-    if (window.ethereum.isConnected()) {
+    if (window.ethereum.selectedAddress) {
+      console.log(window.ethereum.selectedAddress);
       connect()
     }
+
+    connectOnLoad()
+
   }, [])
+
+  async function connectOnLoad() {
+    if (await checkIfConnected()) connect()
+  }
 
   async function connect() {
     try {
       const accs = await window.ethereum.request({ method: "eth_requestAccounts" })
       switchToBSC()
       handleAccountsChanged(accs)
-      localStorage.setItem("isWalletConnected", true);
-
     } catch (e) {
       alert("Something went wrong while connecting metamask");
       console.log(e);

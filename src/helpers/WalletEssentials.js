@@ -3,15 +3,20 @@ import Web3 from "web3";
 const BSC_CHAIN_ID = 97;
 const web3 = new Web3()
 
-function checkIfConnected() {
+async function checkIfConnected() {
     if (!window.ethereum) return false;
-    else return window.ethereum.isConnected();
+    else {
+        const accs = await window.ethereum?.request({ method: "eth_accounts" })
+        return accs.length != 0;
+    }
 }
 
-function isConnectedToBSC() {
-    console.log(window.ethereum.networkVersion);
-    console.log(parseInt(window.ethereum.networkVersion) == BSC_CHAIN_ID);
+async function isConnectedToBSC() {
+    const id = await window.ethereum?.request({ method: "net_version" })
+    return id === BSC_CHAIN_ID
+
 }
+
 
 async function switchToBSC() {
     if (!isConnectedToBSC()) {
