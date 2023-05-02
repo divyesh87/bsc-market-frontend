@@ -16,20 +16,27 @@ function App() {
   const [activeAcc, setactiveAcc] = useState(null)
   useEffect(() => {
 
-    if (!window.ethereum.isMetaMask) {
+
+    if (!window.ethereum?.isMetaMask) {
       setTimeout(() => {
         toastError("Metamask not detected! The app may not work as expected")
       }, 3000)
       return
+    } else {
+      window.ethereum.on('accountsChanged', handleAccountsChanged);
     }
     if (!isConnectedToBSC()) {
       setTimeout(() => {
         toastInfo("You are not connected to BSC, pleae switch to BSC to run full features of the app!")
       }, 2000)
-      setTimeout(async () => {
-        await switchToBSC()
-        await connect()
+      setTimeout(() => {
+        switchToBSC()
+        connect()
       }, 3000)
+    }
+
+    if (window.ethereum.isConnected()) {
+      connect()
     }
   }, [])
 
@@ -46,8 +53,6 @@ function App() {
     }
   }
 
-  // window.ethereum.on()
-  window.ethereum.on('accountsChanged', handleAccountsChanged);
   function handleAccountsChanged(accounts) {
     if (accounts.length === 0) {
       console.log('Please connect to MetaMask.');

@@ -9,7 +9,8 @@ function checkIfConnected() {
 }
 
 function isConnectedToBSC() {
-    return window.ethereum.networkVersion == BSC_CHAIN_ID
+    console.log(window.ethereum.networkVersion);
+    console.log(parseInt(window.ethereum.networkVersion) == BSC_CHAIN_ID);
 }
 
 async function switchToBSC() {
