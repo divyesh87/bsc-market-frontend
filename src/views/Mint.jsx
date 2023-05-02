@@ -13,7 +13,6 @@ import { pinFileToIPFS } from "../helpers/mintEssentials.js"
 import { toastInfo, toastSuccess, toastError } from "../helpers/Toast"
 
 
-
 let web3;
 let tokenContract;
 let playableTokenContract;
@@ -64,33 +63,30 @@ function Mint() {
         reader.addEventListener("load", () => {
           setImgBytes(reader.result)
         })
-
         reader.readAsDataURL(file)
       }
       else return toastError("Unsupported file")
-
     } catch (e) {
       alert("somthing went wrong")
     }
-
   }
+
   async function mint(hash) {
     if (!hash) return
     try {
       const contract = mintType === "img" ? tokenContract : playableTokenContract
-
       const res = await contract.methods.safeMint(activeAcc, hash.toString()).send({
         from: activeAcc
       })
       if (res.blockHash !== null) {
         toastSuccess("NFT Minted Successfully")
       }
-
     } catch (e) {
       toastError("Failed to mint NFT")
       console.log(e);
     }
   }
+
   async function proceedToMint(e) {
     e.preventDefault();
     if (!activeAcc) return toastError("Please connect your wallet to mint")
@@ -109,7 +105,7 @@ function Mint() {
 
   function getVideoId() {
     if (!videoNFTMetadata.uploaded) {
-      toastError("Please upload a video first")
+      return toastError("Please upload a video first")
     };
     let uniqueId = videoNFTMetadata.url.replace("https://res.cloudinary.com/", "")
     return uniqueId

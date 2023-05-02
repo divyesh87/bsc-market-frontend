@@ -1,27 +1,26 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import styles from "../styles/Home.module.css"
 import bnbLogo from "../assets/images/bnbIcon.png"
 import ListedNFT from "../components/ListedNFT"
 import { Box, Typography } from '@material-ui/core'
 import Web3 from 'web3'
 import config from "../bsc/config.json"
+import { WalletContext } from '../components/Wallet'
 
 
 let web3;
 let marketContract;
+
 function Home() {
   const [nftMetadatas, setnftMetadatas] = useState([])
+  const {activeAcc} = useContext(WalletContext)
 
   useEffect(() => {
-
     async function loadAndFetchNFTS() {
       web3 = new Web3(window.ethereum)
-
       async function intializeContracts() {
-
         marketContract = new web3.eth.Contract(config.marketContract.abi, config.marketContract.address);
       }
-
       async function fetchListedNFTs() {
         let tempList = []
         const counter = await marketContract.methods.listingIdCounter().call();
@@ -43,8 +42,7 @@ function Home() {
       await fetchListedNFTs()
     }
     loadAndFetchNFTS()
-
-  }, [])
+  }, [activeAcc])
 
   return (
     <>

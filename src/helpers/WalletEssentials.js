@@ -8,12 +8,12 @@ function checkIfConnected() {
     else return window.ethereum.isConnected();
 }
 
-function connectedToBSC() {
-    return window.ethereum.networkVersion === BSC_CHAIN_ID
+function isConnectedToBSC() {
+    return window.ethereum.networkVersion == BSC_CHAIN_ID
 }
 
 async function switchToBSC() {
-    if (!connectedToBSC) {
+    if (!isConnectedToBSC()) {
         try {
             await window.ethereum.request({
                 method: 'wallet_switchEthereumChain',
@@ -33,8 +33,9 @@ async function switchToBSC() {
                     ]
                 });
             }
+            else console.log(err);
         }
     }
 }
 
-export { checkIfConnected, switchToBSC }
+export { checkIfConnected, switchToBSC, isConnectedToBSC }
