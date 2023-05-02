@@ -9,7 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 function Header() {
 
-    const { connect, activeAcc } = useContext(WalletContext)
+    const { connect, activeAcc, disconnect } = useContext(WalletContext)
 
     return (
         <>
@@ -31,7 +31,7 @@ function Header() {
                             <Typography>My Tokens</Typography>
                         </Link>
                     </div>
-                    <Button onClick={connect} className={styles.walletBtn} variant='outlined' style={{ color: "white", border: "0.1rem solid white" }}>
+                    <Button onClick={activeAcc ? disconnect : connect} className={styles.walletBtn} variant='outlined' style={{ color: "white", border: "0.1rem solid white" }}>
                         {activeAcc ? activeAcc.slice(0, 3) + "..." + activeAcc.slice(activeAcc.length - 3, activeAcc.length) : "Connect"}
                     </Button>
                 </Toolbar>

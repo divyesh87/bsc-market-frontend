@@ -47,6 +47,10 @@ function App() {
     if (await checkIfConnected()) connect()
   }
 
+  async function disconnect(){
+    handleAccountsChanged([])
+  }
+
   async function connect() {
     try {
       const accs = await window.ethereum.request({ method: "eth_requestAccounts" })
@@ -60,7 +64,8 @@ function App() {
 
   function handleAccountsChanged(accounts) {
     if (accounts.length === 0) {
-      console.log('Please connect to MetaMask.');
+      toastInfo("Wallet disconnected!")
+      setactiveAcc(null)
     } else if (accounts[0] !== activeAcc) {
       setactiveAcc(accounts[0]);
     }
@@ -69,7 +74,7 @@ function App() {
   return (
     <>
       <BrowserRouter>
-        <WalletContext.Provider value={{ connect, activeAcc, checkIfConnected }}>
+        <WalletContext.Provider value={{ connect, activeAcc, checkIfConnected , disconnect}}>
           <Header />
           <Routes>
             <Route path="/" Component={Home} />
