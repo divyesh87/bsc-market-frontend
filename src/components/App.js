@@ -54,7 +54,7 @@ function App() {
   async function connect() {
     try {
       const accs = await window.ethereum.request({ method: "eth_requestAccounts" })
-      switchToBSC()
+      await switchToBSC()
       handleAccountsChanged(accs)
     } catch (e) {
       alert("Something went wrong while connecting metamask");

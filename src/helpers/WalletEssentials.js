@@ -19,7 +19,7 @@ async function isConnectedToBSC() {
 
 
 async function switchToBSC() {
-    if (!isConnectedToBSC()) {
+    if (!await isConnectedToBSC()) {
         try {
             await window.ethereum.request({
                 method: 'wallet_switchEthereumChain',
