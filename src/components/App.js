@@ -47,7 +47,7 @@ function App() {
     if (await checkIfConnected()) connect()
   }
 
-  async function disconnect(){
+  async function disconnect() {
     handleAccountsChanged([])
   }
 
@@ -74,7 +74,7 @@ function App() {
   return (
     <>
       <BrowserRouter>
-        <WalletContext.Provider value={{ connect, activeAcc, checkIfConnected , disconnect}}>
+        <WalletContext.Provider value={{ connect, activeAcc, checkIfConnected, disconnect }}>
           <Header />
           <Routes>
             <Route path="/" Component={Home} />

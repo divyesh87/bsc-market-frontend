@@ -1,6 +1,7 @@
 import { Box, Typography } from '@material-ui/core'
 import React, { useState, useEffect } from 'react'
 import styles from "../styles/NFTCard.module.css"
+import ImageLoader from './ImageLoader'
 import SellModal from './SellModal'
 
 function DisplayNFT({ nft }) {
@@ -28,9 +29,9 @@ function DisplayNFT({ nft }) {
                     {
                         metadataType == "img"
                             ?
-                            <img style={{ height: "30vh" }} src={nft.token_uri} />
+                            <ImageLoader src={nft.token_uri} />
                             :
-                            <video style={{height : "30vh", width : "25vw"}} controls loop autoPlay>
+                            <video style={{height : "30vh", width : "25vw"}} controls loop>
                                 <source src={nft.token_uri} />
                             </video>
                     }
