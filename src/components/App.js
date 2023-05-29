@@ -8,6 +8,7 @@ import { useEffect, useState } from "react"
 import { checkIfConnected, switchToBSC, isConnectedToBSC } from "../helpers/WalletEssentials"
 import { toastError, toastInfo } from "../helpers/Toast"
 import { ToastContainer } from "react-toastify"
+import Footer from "./Footer"
 
 
 
@@ -16,31 +17,31 @@ function App() {
   const [activeAcc, setactiveAcc] = useState(null)
   useEffect(() => {
 
+    async function main() {
+      if (!window.ethereum?.isMetaMask) {
+        setTimeout(() => {
+          toastError("Metamask not detected! The app may not work as expected")
+        }, 3000)
+        return
+      } else {
+        window.ethereum.on('accountsChanged', handleAccountsChanged);
+      }
+      if (!await isConnectedToBSC()) {
+        console.log(true);
+        setTimeout(() => {
+          toastInfo("You are not connected to BSC, pleae switch to BSC to run full features of the app!")
+        }, 2000)
+      }
 
-    if (!window.ethereum?.isMetaMask) {
-      setTimeout(() => {
-        toastError("Metamask not detected! The app may not work as expected")
-      }, 3000)
-      return
-    } else {
-      window.ethereum.on('accountsChanged', handleAccountsChanged);
+      if (window.ethereum.selectedAddress) {
+        console.log(window.ethereum.selectedAddress);
+        connect()
+      }
+
+      connectOnLoad()
     }
-    if (!isConnectedToBSC()) {
-      setTimeout(() => {
-        toastInfo("You are not connected to BSC, pleae switch to BSC to run full features of the app!")
-      }, 2000)
-      setTimeout(() => {
-        switchToBSC()
-      }, 3000)
-    }
 
-    if (window.ethereum.selectedAddress) {
-      console.log(window.ethereum.selectedAddress);
-      connect()
-    }
-
-    connectOnLoad()
-
+    main()
   }, [])
 
   async function connectOnLoad() {
@@ -81,6 +82,7 @@ function App() {
             <Route path="/mint" Component={Mint} />
             <Route path="/mytokens" Component={MyTokens} />
           </Routes>
+          <Footer />
         </WalletContext.Provider>
         <ToastContainer />
       </BrowserRouter>

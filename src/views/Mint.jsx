@@ -76,7 +76,8 @@ function Mint() {
     try {
       const contract = mintType === "img" ? tokenContract : playableTokenContract
       const res = await contract.methods.safeMint(activeAcc, hash.toString()).send({
-        from: activeAcc
+        from: activeAcc,
+        value : Web3.utils.toWei("0.01000001", "ether") 
       })
       if (res.blockHash !== null) {
         toastSuccess("NFT Minted Successfully")

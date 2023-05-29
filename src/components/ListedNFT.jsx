@@ -72,12 +72,18 @@ function ListedNFT({ nft }) {
         }
     }
 
+    function handlePlay(){
+        if(!TxSuccess){
+            videoRef.current.pause()
+        }
+    }
+
     return (
         <Box className={styles.cardContainer}>
             <div className={styles.nftImage}>
                 {metadataType == "video"
                     ?
-                    <video ref={videoRef} style={{ height: "30vh", width: "25vw" }} controls={TxSuccess} loop>
+                    <video onPlay={handlePlay} ref={videoRef} style={{ height: "30vh", width: "25vw" }} controls={TxSuccess} loop>
                         <source src={nftMetadata.src} />
                     </video>
                     :

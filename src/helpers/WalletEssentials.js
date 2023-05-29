@@ -13,8 +13,7 @@ async function checkIfConnected() {
 
 async function isConnectedToBSC() {
     const id = await window.ethereum?.request({ method: "net_version" })
-    return id === BSC_CHAIN_ID
-
+    return id == BSC_CHAIN_ID
 }
 
 

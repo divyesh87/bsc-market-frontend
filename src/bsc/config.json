@@ -1,9 +1,15 @@
 {
     "tokenContract": {
-        "address": "0x9fDAAA5C2281AABC4E9Ea0654bD278390d4D1513",
+        "address": "0x595A1d7213b5507c584CF1Fa708Cf364cE6676dd",
         "abi": [
             {
-                "inputs": [],
+                "inputs": [
+                    {
+                        "internalType": "address",
+                        "name": "_owner",
+                        "type": "address"
+                    }
+                ],
                 "stateMutability": "nonpayable",
                 "type": "constructor"
             },
@@ -116,7 +122,7 @@
                 ],
                 "name": "safeMint",
                 "outputs": [],
-                "stateMutability": "nonpayable",
+                "stateMutability": "payable",
                 "type": "function"
             },
             {
@@ -247,6 +253,26 @@
                 "name": "transferOwnership",
                 "outputs": [],
                 "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "inputs": [],
+                "name": "withdrawFees",
+                "outputs": [],
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "inputs": [],
+                "name": "admin",
+                "outputs": [
+                    {
+                        "internalType": "address",
+                        "name": "",
+                        "type": "address"
+                    }
+                ],
+                "stateMutability": "view",
                 "type": "function"
             },
             {
@@ -410,7 +436,7 @@
         ]
     },
     "marketContract": {
-        "address": "0xe24e9E1f9F6f8Ec832ab753f7D5875ECACA1686f",
+        "address": "0xC6C8FC68a8641C6e9C938dE034FC8936a4CE9419",
         "abi": [
             {
                 "inputs": [
@@ -588,10 +614,16 @@
         ]
     },
     "playableNFTContract": {
-        "address": "0x33ab289847F138A2E013aE296FD7FBa4522796fc",
+        "address": "0xC282Fc33B9675D6F8BbE053D57F6D8b2Cb62817D",
         "abi": [
             {
-                "inputs": [],
+                "inputs": [
+                    {
+                        "internalType": "address",
+                        "name": "_owner",
+                        "type": "address"
+                    }
+                ],
                 "stateMutability": "nonpayable",
                 "type": "constructor"
             },
@@ -704,7 +736,7 @@
                 ],
                 "name": "safeMint",
                 "outputs": [],
-                "stateMutability": "nonpayable",
+                "stateMutability": "payable",
                 "type": "function"
             },
             {
@@ -835,6 +867,26 @@
                 "name": "transferOwnership",
                 "outputs": [],
                 "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "inputs": [],
+                "name": "withdrawFees",
+                "outputs": [],
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "inputs": [],
+                "name": "admin",
+                "outputs": [
+                    {
+                        "internalType": "address",
+                        "name": "",
+                        "type": "address"
+                    }
+                ],
+                "stateMutability": "view",
                 "type": "function"
             },
             {
