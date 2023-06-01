@@ -31,9 +31,15 @@ function Header() {
                             <Typography>My Tokens</Typography>
                         </Link>
                     </div>
-                    <Button onClick={activeAcc ? disconnect : connect} className={styles.walletBtn} variant='outlined' style={{ color: "white", border: "0.1rem solid white" }}>
-                        {activeAcc ? activeAcc.slice(0, 3) + "..." + activeAcc.slice(activeAcc.length - 3, activeAcc.length) : "Connect"}
-                    </Button>
+                    <div style={{display : "flex", justifyContent : "space-around", gap : "2rem", alignItems : "center"}}>
+                        <Link style={{ color: "white", marginLeft: "5rem" }} to="/authenticate">
+                            <Typography>Login / Signup</Typography>
+                        </Link>
+                       <Button onClick={activeAcc ? disconnect : connect} className={styles.walletBtn} variant='outlined' style={{ color: "white", border: "0.1rem solid white" }}>
+                            {activeAcc ? activeAcc.slice(0, 3) + "..." + activeAcc.slice(activeAcc.length - 3, activeAcc.length) : "Connect"}
+                        </Button>
+                    </div>
+
                 </Toolbar>
 
             </AppBar>

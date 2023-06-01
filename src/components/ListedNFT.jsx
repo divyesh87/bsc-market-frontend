@@ -72,8 +72,8 @@ function ListedNFT({ nft }) {
         }
     }
 
-    function handlePlay(){
-        if(!TxSuccess){
+    function handlePlay() {
+        if (!TxSuccess) {
             videoRef.current.pause()
         }
     }

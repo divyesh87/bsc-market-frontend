@@ -9,6 +9,7 @@ import { checkIfConnected, switchToBSC, isConnectedToBSC } from "../helpers/Wall
 import { toastError, toastInfo } from "../helpers/Toast"
 import { ToastContainer } from "react-toastify"
 import Footer from "./Footer"
+import Authenticate from "../views/Authenticate"
 
 
 
@@ -27,14 +28,12 @@ function App() {
         window.ethereum.on('accountsChanged', handleAccountsChanged);
       }
       if (!await isConnectedToBSC()) {
-        console.log(true);
         setTimeout(() => {
           toastInfo("You are not connected to BSC, pleae switch to BSC to run full features of the app!")
         }, 2000)
       }
 
       if (window.ethereum.selectedAddress) {
-        console.log(window.ethereum.selectedAddress);
         connect()
       }
 
@@ -81,6 +80,7 @@ function App() {
             <Route path="/" Component={Home} />
             <Route path="/mint" Component={Mint} />
             <Route path="/mytokens" Component={MyTokens} />
+            <Route path="/authenticate" Component={Authenticate} />
           </Routes>
           <Footer />
         </WalletContext.Provider>
