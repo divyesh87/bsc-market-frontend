@@ -3,10 +3,7 @@ import {
     GoogleAuthProvider,
     getAuth,
     signInWithPopup,
-    signInWithEmailAndPassword,
-    createUserWithEmailAndPassword,
-    sendPasswordResetEmail,
-    signOut,
+    signInWithPhoneNumber
 } from "firebase/auth";
 import {
     getFirestore,
@@ -53,4 +50,4 @@ const signInWithGoogle = async () => {
     }
 };
 
-export { signInWithGoogle } 
+export { signInWithGoogle , auth , signInWithPhoneNumber} 
