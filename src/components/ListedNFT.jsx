@@ -83,7 +83,7 @@ function ListedNFT({ nft }) {
             <div className={styles.nftImage}>
                 {metadataType == "video"
                     ?
-                    <video onPlay={handlePlay} ref={videoRef} style={{ height: "30vh", width: "25vw" }} controls={TxSuccess} loop>
+                    <video  onPlay={handlePlay} ref={videoRef} controlsList="nodownload" style={{ height: "30vh", width: "25vw" }} controls={TxSuccess} loop>
                         <source src={nftMetadata.src} />
                     </video>
                     :
