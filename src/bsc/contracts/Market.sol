@@ -13,10 +13,13 @@ contract NFTMarketplace {
         bool isActive;
     }
 
+    // Counter to generate unique listing IDs
     uint256 public listingIdCounter;
 
+    // Mapping of listing ID to listing
     mapping(uint256 => Listing) public listings;
 
+    // Events
     event TokenListed(uint256 listingId, uint256 tokenId, uint256 price, address seller, address tokenContract);
     event TokenSold(uint256 listingId, uint256 tokenId, uint256 price, address seller, address buyer, address tokenContract);
 
@@ -25,8 +28,10 @@ contract NFTMarketplace {
     require(IERC721(tokenContractAddress).ownerOf(tokenId) == msg.sender, "Sender is not the owner of the token");
     require(price > 0, "Price must be greater than zero");
 
+    // Check if the marketplace is approved to transfer the token
     require(IERC721(tokenContractAddress).getApproved(tokenId) == address(this), "Marketplace is not approved to transfer the token");
 
+    // Check if the token is already listed
     for (uint i = 0; i < listingIdCounter; i++) {
         Listing memory listing = listings[i];
         if (listing.tokenContract == tokenContractAddress && listing.tokenId == tokenId && listing.isActive) {
@@ -44,6 +49,7 @@ contract NFTMarketplace {
 }
 
 
+    // Buy a token that is listed for sale
     function buyToken(uint256 listingId) public payable {
         Listing storage listing = listings[listingId];
         require(listing.isActive, "Token is not listed for sale");
@@ -55,12 +61,15 @@ contract NFTMarketplace {
         uint256 salePrice = listing.price;
         address tokenContractAddress = listing.tokenContract;
 
+        // Transfer the token to the buyer
         IERC721(tokenContractAddress).safeTransferFrom(seller, buyer, tokenId);
+        listings[listingId].isActive = false;
 
+        // Pay the seller
         (bool success, ) = seller.call{value: salePrice}("");
         require(success, "Transfer to seller failed");
 
-        listings[listingId].isActive = false;
+        // Mark the listing as not active
 
         emit TokenSold(listingId, tokenId, salePrice, seller, buyer, tokenContractAddress);
     }}

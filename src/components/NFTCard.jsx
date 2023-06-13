@@ -9,7 +9,9 @@ function DisplayNFT({ nft }) {
     const [Modal, setModal] = useState(false)
     const [metadataType, setmetadataType] = useState(null)
 
+
     useEffect(() => {
+        if (!nft.token_uri) nft.token_uri = "https://sapphire-chemical-flamingo-314.mypinata.cloud/ipfs/QmXYmiRDNbScnUyiJe9rM8MxQxAh89krkMs8LNySJn8CMt"
         if (nft.token_uri.startsWith("https://res.cloudinary.com")) {
             setmetadataType("video")
         }
@@ -31,7 +33,7 @@ function DisplayNFT({ nft }) {
                             ?
                             <ImageLoader src={nft.token_uri} />
                             :
-                            <video style={{height : "30vh", width : "25vw"}} controls loop>
+                            <video style={{ height: "30vh", width: "25vw" }} controls loop>
                                 <source src={nft.token_uri} />
                             </video>
                     }

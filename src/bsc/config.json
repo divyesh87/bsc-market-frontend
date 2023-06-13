@@ -436,7 +436,7 @@
         ]
     },
     "marketContract": {
-        "address": "0xC6C8FC68a8641C6e9C938dE034FC8936a4CE9419",
+        "address": "0xdbcD93a0E1392D7Eb8772cBbEA7Aa785f86EC9c8",
         "abi": [
             {
                 "inputs": [
